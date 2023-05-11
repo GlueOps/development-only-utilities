@@ -1,0 +1,31 @@
+gcp-project-teardown() {
+
+    while [[ $# -gt 0 ]]; do
+      key="$1"
+      case $key in
+        (-p|--project_id)
+          raw_project_id="$2"
+          project_id=${raw_project_id:0:30}
+          shift
+          shift
+          ;;
+        (--help)
+          echo "Usage: destroys a GCP project and unlinks billing from that project [options]"
+          echo ""
+          echo "Options:"
+          echo "  -p, --project_id VALUE    Set the project_id of your GCP project (default: placeholder_cluster_environment-placeholder_tenant_key)"
+          echo "  --help              Show this help message and exit"
+          return
+          ;;
+        (*)
+          echo "Unknown option: $key"
+          echo "Run 'gcp-project-teardown --help' for usage information."
+          return
+          ;;
+      esac
+    done
+
+    gcloud projects delete $project_id && \
+    gcloud alpha billing projects unlink $project_id
+
+}
