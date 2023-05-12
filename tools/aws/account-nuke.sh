@@ -3,7 +3,7 @@
 ### Variables
 ##
 set -e
-echo "Please enter your AWS account name. It should start with glueops-captain:"
+echo "Please enter your AWS account name. It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):"
 read ACCOUNT_NAME
 wget https://github.com/rebuy-de/aws-nuke/releases/download/v2.22.1/aws-nuke-v2.22.1-linux-amd64.tar.gz && tar -xvf aws-nuke-v2.22.1-linux-amd64.tar.gz && rm aws-nuke-v2.22.1-linux-amd64.tar.gz && mv aws-nuke-v2.22.1-linux-amd64 aws-nuke
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
