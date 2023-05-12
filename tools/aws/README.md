@@ -6,7 +6,7 @@
 - Open [CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2)
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/account-nuke.sh)
+bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/account-setup.sh)
 ```
 
 ## Nuke/Destroy AWS Account (CLOUD SHELL)
