@@ -3,7 +3,6 @@
 ### Variables
 ##
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
-sed -i 's/AWS_ACCOUNT_ID_TO_DESTROY/$SUB_ACCOUNT_ID/g' nuke.yaml
 IAM_USER_NAME="dev-deployment-svc-account"
 IAM_ROLE_NAME="captain-role"
 IAM_POLICY_ARN="arn:aws:iam::aws:policy/AdministratorAccess"
