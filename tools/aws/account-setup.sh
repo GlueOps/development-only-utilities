@@ -51,19 +51,15 @@ ARN_OF_ROLE_CREATED=$(aws iam get-role --role-name $IAM_ROLE_NAME --query 'Role.
 #
 #
 #
-echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 ##
 echo "Run the following exports into your codespace environment (save them for future use):"
-echo "\n\n"
+echo -e "\n\n"
 echo "export AWS_ACCESS_KEY_ID=$accessKey"
 echo "export AWS_SECRET_ACCESS_KEY=$secretKey"
 echo "export AWS_DEFAULT_REGION=us-west-2"
 #
-echo "\n\n"
+echo -e "\n\n"
 echo "Here is the role you will want to assume in terraform (save for future use):"
 echo "$ARN_OF_ROLE_CREATED"
-#
