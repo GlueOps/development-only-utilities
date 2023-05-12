@@ -1,0 +1,52 @@
+
+   deploy-glueops-platform() {
+    platform_version=""
+
+    # Parse flags
+    while [[ $# -gt 0 ]]; do
+      key="$1"
+      case $key in
+        (-p|--platform-version)
+          platform_version="$2"
+          shift
+          shift
+          ;;
+        (--help)
+          echo "Usage: deploy-glueops-platform [options]"
+          echo ""
+          echo "Options:"
+          echo "  -p, --platform-version VALUE   Set the version for GlueOps Platform to deploy"
+          echo "  --help                         Show this help message and exit"
+          return
+          ;;
+        (*)
+          echo "Unknown option: $key"
+          echo "Run 'deploy-glueops-platform --help' for usage information."
+          return
+          ;;
+      esac
+    done
+
+    # Check if version argument was provided
+    if [[ -z $platform_version ]]; then
+        echo "Platform version is required."
+        echo "Run 'deploy-glueops-platform --help' for usage information."
+        return
+    fi
+    
+    
+    helm repo add glueops-platform https://helm.gpkg.io/platform && \
+    helm repo update && \
+    helm install glueops-platform glueops-platform/glueops-platform --version $platform_version -f platform.yaml --namespace=glueops-core
+    echo "--------------------------------------------------------------"
+    echo -e "🕑  \033[1;32mMonitoring GlueOps Platform installation will start in 2 seconds...\033[0m"
+    echo -e "👁️  We'll use the command: \033[1;34mkubectl get applications -n glueops-core\033[0m"
+    echo "--------------------------------------------------------------"
+    echo -e "🛑  You may stop the monitoring process at any time using \033[1;31mCTRL+C\033[0m."
+    echo -e "⏳  Please wait until all services are synced and healthy, except \033[1;31mvault\033[0m."
+    echo "--------------------------------------------------------------"
+    echo -e "🐢  This process will take a few minutes."
+    echo "--------------------------------------------------------------"
+    sleep 3
+    watch kubectl get applications -n glueops-core
+}
