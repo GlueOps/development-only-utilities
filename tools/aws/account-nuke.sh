@@ -34,6 +34,9 @@ regions: #this regions list was last updated on April 2, 2022.
 EOF
 
 
+sed -i 's/AWS_ACCOUNT_ID_TO_DESTROY/${SUB_ACCOUNT_ID}/g' nuke.yaml
+
+
 ##SUB_ACCOUNT_ID="<SubAccountID>"
 IAM_USER_NAME="dev-deployment-svc-account"
 IAM_ROLE_NAME="captain-role"
