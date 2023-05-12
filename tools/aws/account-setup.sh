@@ -57,7 +57,7 @@ GREEN=$'\033[32m'
 RESET=$'\033[0m'
 
 cat << EOF
-${GREEN}Run the following in your codespace environment:${RESET}
+${GREEN}Run the following in your codespace environment to create your .env:${RESET}
 
 cat <<ENV >> \$(pwd)/.env
 export AWS_ACCESS_KEY_ID=${accessKey}
