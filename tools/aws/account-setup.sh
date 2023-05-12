@@ -62,4 +62,6 @@ echo "export AWS_DEFAULT_REGION=us-west-2"
 #
 echo -e "\n\n"
 echo "Here is the role you will want to assume in terraform (save for future use):"
+echo -e "\n"
 echo "$ARN_OF_ROLE_CREATED"
+echo -e "\n\n"
