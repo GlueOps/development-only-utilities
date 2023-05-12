@@ -58,19 +58,19 @@ echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 ##
 echo "Run the following in your codespace environment:"
 echo -e "\n\n"
-cat << EOF
-\e[32m
-Run the following in your codespace environment:
+GREEN=$'\033[32m'
+RESET=$'\033[0m'
 
-cat <<ENV >> $(pwd)/.env
+cat << EOF
+${GREEN}Run the following in your codespace environment:${RESET}
+
+cat <<ENV >> \$(pwd)/.env
 export AWS_ACCESS_KEY_ID=${accessKey}
 export AWS_SECRET_ACCESS_KEY=${secretKey}
 export AWS_DEFAULT_REGION=us-west-2
 ENV
-\e[0m
-\e[34m
-Here is the role you will want to specify in your terraform module:
+
+${GREEN}Here is the role you will want to specify in your terraform module:${RESET}
 
 ${ARN_OF_ROLE_CREATED}
-\e[0m
 EOF
