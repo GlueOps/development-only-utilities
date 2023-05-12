@@ -54,7 +54,7 @@ export AWS_SECRET_ACCESS_KEY=$secretAccessKey
 export AWS_DEFAULT_REGION=us-west-2
 
 
-
+cat nuke.yaml
 ./aws-nuke -c nuke.yaml
 
 rm nuke.yaml
