@@ -58,14 +58,19 @@ echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 ##
 echo "Run the following in your codespace environment:"
 echo -e "\n\n"
-echo "cat <<EOF >> $(pwd)/.env"
-echo "export AWS_ACCESS_KEY_ID=$accessKey"
-echo "export AWS_SECRET_ACCESS_KEY=$secretKey"
-echo "export AWS_DEFAULT_REGION=us-west-2"
-echo "EOF"
-#
-echo -e "\n\n"
-echo "Here is the role you will want to specify in your terraform module:"
-echo -e "\n"
-echo "$ARN_OF_ROLE_CREATED"
-echo -e "\n\n"
+cat << EOF
+\e[32m
+Run the following in your codespace environment:
+
+cat <<ENV >> $(pwd)/.env
+export AWS_ACCESS_KEY_ID=${accessKey}
+export AWS_SECRET_ACCESS_KEY=${secretKey}
+export AWS_DEFAULT_REGION=us-west-2
+ENV
+\e[0m
+\e[34m
+Here is the role you will want to specify in your terraform module:
+
+${ARN_OF_ROLE_CREATED}
+\e[0m
+EOF
