@@ -1,14 +1,5 @@
 # Example Usage
 
-## Check AWS Account (CLOUD SHELL)
-
-- Login to AWS (Root/Master Organization)
-- Open [CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2)
-
-```bash
-bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/account-check.sh)
-```
-
 ## Setup AWS Account
 
 - Login to AWS (Root/Master Organization)
