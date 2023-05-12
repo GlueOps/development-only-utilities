@@ -30,7 +30,7 @@ export AWS_ACCESS_KEY_ID=$accessKeyId
 export AWS_SECRET_ACCESS_KEY=$secretAccessKey
 ##
 ### Create IAM user in the sub-account
-aws iam create-user --user-name $IAM_USER_NAME
+aws iam create-user --user-name $IAM_USER_NAME > /dev/null
 #
 ### Attach AdministratorAccess policy to the IAM user
 aws iam attach-user-policy --user-name $IAM_USER_NAME --policy-arn $IAM_POLICY_ARN
@@ -40,18 +40,13 @@ userKeys=$(aws iam create-access-key --user-name $IAM_USER_NAME --query 'AccessK
 accessKey=$(echo $userKeys | awk '{print $1}')
 secretKey=$(echo $userKeys | awk '{print $2}')
 ##
-echo "Access Key: $accessKey"
-echo "Secret Key: $secretKey"
-##
 ### Create IAM role with AdministratorAccess policy in the sub-account
 assumeRolePolicyDocument='{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"'arn:aws:iam::$SUB_ACCOUNT_ID:root'"},"Action":"sts:AssumeRole"}]}'
 ##
-aws iam create-role --role-name $IAM_ROLE_NAME --assume-role-policy-document "$assumeRolePolicyDocument"
+aws iam create-role --role-name $IAM_ROLE_NAME --assume-role-policy-document "$assumeRolePolicyDocument" > /dev/null
 ##
 ### Attach AdministratorAccess policy to the IAM role
 #aws iam attach-role-policy --role-name $IAM_ROLE_NAME --policy-arn $IAM_POLICY_ARN
-##
-echo "IAM Role: $IAM_ROLE_NAME created with AdministratorAccess policy."
 ##
 ARN_OF_ROLE_CREATED=$(aws iam get-role --role-name $IAM_ROLE_NAME --query 'Role.Arn' --output text)
 #
