@@ -9,7 +9,6 @@ echo -e "\n"
 echo "Please enter your AWS account name. It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):"
 echo ""
 read ACCOUNT_NAME
-echo -e "\n"
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
 IAM_USER_NAME="dev-deployment-svc-account"
 IAM_ROLE_NAME="captain-role"
@@ -53,11 +52,7 @@ ARN_OF_ROLE_CREATED=$(aws iam get-role --role-name $IAM_ROLE_NAME --query 'Role.
 #
 #
 #
-echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-echo -e "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-##
-echo "Run the following in your codespace environment:"
-echo -e "\n\n"
+set -e "\n\n"
 GREEN=$'\033[32m'
 RESET=$'\033[0m'
 
