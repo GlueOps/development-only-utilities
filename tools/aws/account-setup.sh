@@ -65,7 +65,7 @@ export AWS_SECRET_ACCESS_KEY=${secretKey}
 export AWS_DEFAULT_REGION=us-west-2
 ENV
 
-${GREEN}Here is the role you will want to specify in your terraform module:${RESET}
+${GREEN}Here is the iam_role_to_assume that you will need to specify in your terraform module:${RESET}
 
 ${ARN_OF_ROLE_CREATED}
 EOF
