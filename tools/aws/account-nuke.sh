@@ -37,11 +37,6 @@ EOF
 sed -i 's/AWS_ACCOUNT_ID_TO_DESTROY/${SUB_ACCOUNT_ID}/g' nuke.yaml
 
 
-##SUB_ACCOUNT_ID="<SubAccountID>"
-IAM_USER_NAME="dev-deployment-svc-account"
-IAM_ROLE_NAME="captain-role"
-IAM_POLICY_ARN="arn:aws:iam::aws:policy/AdministratorAccess"
-##
 ### Assume role in the sub-account
 assumeRole=$(aws sts assume-role --role-arn "arn:aws:iam::$SUB_ACCOUNT_ID:role/OrganizationAccountAccessRole" --role-session-name "SubAccountAccess")
 ##
