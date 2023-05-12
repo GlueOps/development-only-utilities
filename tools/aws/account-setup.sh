@@ -3,9 +3,11 @@
 ### Variables
 ##
 set -e
-echo "Please enter your AWS account name. It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):"
 echo -e "\n"
+echo "Please enter your AWS account name. It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):"
+echo ""
 read ACCOUNT_NAME
+echo -e "\n"
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
 IAM_USER_NAME="dev-deployment-svc-account"
 IAM_ROLE_NAME="captain-role"
