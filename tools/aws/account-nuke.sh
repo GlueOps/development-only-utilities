@@ -54,6 +54,6 @@ export AWS_DEFAULT_REGION=us-west-2
 
 
 
-#./aws-nuke -c aws-nuke.yaml.tpl
+./aws-nuke -c aws-nuke.yaml.tpl
 
 rm nuke.yaml
