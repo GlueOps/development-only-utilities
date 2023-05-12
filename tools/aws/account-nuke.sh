@@ -56,6 +56,6 @@ export AWS_DEFAULT_REGION=us-west-2
 
 
 
-./aws-nuke -c aws-nuke.yaml.tpl --assume-role-arn arn:aws:iam::321251276810:role/OrganizationAccountAccessRole
+./aws-nuke -c aws-nuke.yaml.tpl
 
 rm nuke.yaml
