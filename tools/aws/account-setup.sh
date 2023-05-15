@@ -45,7 +45,7 @@ assumeRolePolicyDocument='{"Version":"2012-10-17","Statement":[{"Effect":"Allow"
 aws iam create-role --role-name $IAM_ROLE_NAME --assume-role-policy-document "$assumeRolePolicyDocument" > /dev/null
 ##
 ### Attach AdministratorAccess policy to the IAM role
-#aws iam attach-role-policy --role-name $IAM_ROLE_NAME --policy-arn $IAM_POLICY_ARN
+aws iam attach-role-policy --role-name $IAM_ROLE_NAME --policy-arn $IAM_POLICY_ARN
 ##
 ARN_OF_ROLE_CREATED=$(aws iam get-role --role-name $IAM_ROLE_NAME --query 'Role.Arn' --output text)
 #
