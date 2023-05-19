@@ -55,6 +55,6 @@
     echo -e "🐢  The \033[1;33margocd-redis-ha-server-*\033[0m pods might take the longest to deploy."
     echo -e "🔢  Make sure to wait until \033[1;36m3 pods\033[0m with \033[1;36m3 replicas\033[0m each are fully deployed."
     echo "--------------------------------------------------------------"
-    sleep 3
+    sleep 10
     watch kubectl get pods -n glueops-core
 }
