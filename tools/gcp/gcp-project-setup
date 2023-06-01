@@ -46,13 +46,11 @@ gcp-project-setup() {
     gcloud iam service-accounts keys create creds.json \
       --iam-account=$service_account_id@$project_id.iam.gserviceaccount.com
     echo " "
-    echo " "
     echo "copy creds.json below"
     echo "    ▼▼▼▼▼▼▼"
     echo "     ▼▼▼▼▼"
     echo "      ▼▼▼"
     echo "       ▼"
-    echo " "
     cat creds.json
     echo " "
     echo "       ▲"
@@ -60,4 +58,5 @@ gcp-project-setup() {
     echo "     ▲▲▲▲▲"
     echo "    ▲▲▲▲▲▲▲"
     echo "end of creds.json"
+    echo " "
 }
