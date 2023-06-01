@@ -44,6 +44,19 @@ gcp-project-setup() {
       --member="serviceAccount:$service_account_id@$project_id.iam.gserviceaccount.com" \
       --role="roles/owner" && \
     gcloud iam service-accounts keys create creds.json \
-      --iam-account=$service_account_id@$project_id.iam.gserviceaccount.com && \
+      --iam-account=$service_account_id@$project_id.iam.gserviceaccount.com
+    echo " "
+    echo "copy creds.json below"
+    echo "    ▼▼▼▼▼▼▼"
+    echo "     ▼▼▼▼▼"
+    echo "      ▼▼▼"
+    echo "       ▼"
     cat creds.json
+    echo " "
+    echo "       ▲"
+    echo "      ▲▲▲"
+    echo "     ▲▲▲▲▲"
+    echo "    ▲▲▲▲▲▲▲"
+    echo "end of creds.json"
+    echo " "
 }
