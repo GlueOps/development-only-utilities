@@ -1,5 +1,5 @@
 gke-auth() {
-    region="us-central1-a"
+    region="us-central1"
     creds_file="creds.json"
     project_id=$(jq -r ".project_id" "$creds_file")
 
