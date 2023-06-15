@@ -46,13 +46,16 @@ gcp-project-setup() {
     gcloud iam service-accounts keys create creds.json \
       --iam-account=$service_account_id@$project_id.iam.gserviceaccount.com
     echo " "
-    echo "copy creds.json below"
+    echo "run the following command in a terminal of your codespace"
+    echo "that has navigated to the root directory of the tenant repository"
+    echo "to create the required creds.json file"
     echo "    ▼▼▼▼▼▼▼"
     echo "     ▼▼▼▼▼"
     echo "      ▼▼▼"
     echo "       ▼"
-    cat creds.json
-    echo " "
+    credsFile="creds.json"
+    b64_creds=$(base64 -w0 "$credsFile")
+    echo "echo ${b64_creds} | base64 -d > $credsFile"
     echo "       ▲"
     echo "      ▲▲▲"
     echo "     ▲▲▲▲▲"
