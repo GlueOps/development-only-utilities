@@ -49,14 +49,9 @@ gcp-project-setup() {
     GREEN='\033[0;32m'
     YELLOW='\033[1;33m'
     NO_COLOR='\033[0m'
-
     echo -e "${YELLOW}👉 ${GREEN}Run the following command in a terminal of your codespace ${NO_COLOR} 🖥️"
     echo -e "${YELLOW}👉 ${GREEN}Make sure you have navigated to the root directory of the tenant repository ${NO_COLOR} 📁"
     echo -e "${YELLOW}👉 ${GREEN}This will create the required creds.json file ${NO_COLOR} 🗝️"
-
-    echo "run the following command in a terminal of your codespace"
-    echo "that has navigated to the root directory of the tenant repository"
-    echo "to create the required creds.json file"
     echo "    ▼▼▼▼▼▼▼"
     echo "     ▼▼▼▼▼"
     echo "      ▼▼▼"
