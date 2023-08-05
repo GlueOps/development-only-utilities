@@ -11,7 +11,7 @@ echo ""
 read ACCOUNT_NAME
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
 IAM_USER_NAME="dev-deployment-svc-account"
-IAM_ROLE_NAME="captain-role"
+IAM_ROLE_NAME="glueops-captain-role"
 IAM_POLICY_ARN="arn:aws:iam::aws:policy/AdministratorAccess"
 ##
 ### Assume role in the sub-account
