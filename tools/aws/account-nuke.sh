@@ -4,13 +4,15 @@
 ##
 set -e
 echo -e "\n"
+AWS_NUKE_VERSION=v2.24.2
+
 [ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] && echo -e "\e[32mTHIS IS THE ROOT ACCOUNT. PLEASE PROCEED\e[0m" || echo -e "\e[31mTHIS IS NOT THE ROOT ACCOUNT STOP IMMEDIATELY.\e[0m"
 echo -e "\n"
 echo "Please enter your AWS account name. It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):"
 echo ""
 read ACCOUNT_NAME
 echo -e "\n"
-wget https://github.com/rebuy-de/aws-nuke/releases/download/v2.24.0/aws-nuke-v2.24.0-linux-amd64.tar.gz && tar -xvf aws-nuke-v2.24.0-linux-amd64.tar.gz && rm aws-nuke-v2.24.0-linux-amd64.tar.gz && mv aws-nuke-v2.24.0-linux-amd64 aws-nuke
+wget https://github.com/rebuy-de/aws-nuke/releases/download/$AWS_NUKE_VERSION/aws-nuke-$AWS_NUKE_VERSION-linux-amd64.tar.gz && tar -xvf aws-nuke-$AWS_NUKE_VERSION-linux-amd64.tar.gz && rm aws-nuke-$AWS_NUKE_VERSION-linux-amd64.tar.gz && mv aws-nuke-$AWS_NUKE_VERSION-linux-amd64 aws-nuke
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
 
 cat << 'EOF' > nuke.yaml
