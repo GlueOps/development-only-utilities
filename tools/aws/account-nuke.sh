@@ -39,9 +39,10 @@ presets:
 
 
 
-regions: #this regions list was last updated on April 2, 2022.
+regions: #this regions list was last updated on October 10, 2023.
 - global
 - us-west-2
+- us-east-1
 
 EOF
 
