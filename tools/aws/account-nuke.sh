@@ -37,6 +37,10 @@ presets:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
 
+resource-types:
+  excludes:
+    # don't nuke OpenSearch Packages, see https://github.com/rebuy-de/aws-nuke/issues/1123
+    - OSPackage
 
 
 regions: #this regions list was last updated on October 10, 2023.
