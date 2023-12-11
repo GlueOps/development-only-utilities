@@ -25,3 +25,12 @@ bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilit
 ```bash
 aws eks update-kubeconfig --region us-west-2 --name captain-cluster
 ```
+
+## Get Quotas (CLOUD SHELL)
+
+- Login to AWS (Root/Master Organization)
+- Open [CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2)
+
+```bash
+bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/get-quotas.sh)
+```
