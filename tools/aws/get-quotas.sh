@@ -3,9 +3,9 @@
 set -e
 
 # Prompt for service code, quota code, and AWS region
-read -p "Enter the service code (e.g., 'ec2' for EC2): " SERVICE_CODE
-read -p "Enter the quota code (e.g., 'L-1216C47A' for EC2 standard instances): " QUOTA_CODE
-read -p "Enter the AWS region (e.g., 'us-west-2'): " AWS_REGION
+read -p "Enter the service code (e.g., 'ec2' for EC2, 'cloudfront' for CloudFront): " SERVICE_CODE
+read -p "Enter the quota code (e.g., 'L-1216C47A' for EC2 standard instances, 'L-24B04930' for CloudFront distributions ): " QUOTA_CODE
+read -p "Enter the AWS region (e.g., 'us-west-2', 'us-east-1'): " AWS_REGION
 
 # Role ARN to assume in each account is always OrganizationAccountAccessRole
 ROLE_NAME="OrganizationAccountAccessRole"
