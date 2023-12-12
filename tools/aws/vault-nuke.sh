@@ -34,6 +34,6 @@ export AWS_ACCESS_KEY_ID=$accessKeyId
 export AWS_SECRET_ACCESS_KEY=$secretAccessKey
 export AWS_DEFAULT_REGION=us-west-2
 
-S3_PATH="glueops-$TENANT_NAME-primary/$CAPTAIN_DOMAIN"
+S3_PATH="glueops-$ACCOUNT_NAME-primary/$CAPTAIN_DOMAIN"
 echo "Deleting s3://$S3_PATH"
 aws s3 rm s3://$S3_PATH --recursive
