@@ -34,3 +34,10 @@ aws eks update-kubeconfig --region us-west-2 --name captain-cluster
 ```bash
 bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/get-quotas.sh)
 ```
+
+## Delete tenant data from S3
+
+- Login to AWS (Root/Master Organization)
+- Open [CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2)
+
+ bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/aws/tools/aws/tenant-s3-nuke.sh)
