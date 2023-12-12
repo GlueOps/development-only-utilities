@@ -5,7 +5,7 @@ echo -e "\n"
 
 [ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] || echo -e "\e[31mTHIS IS NOT THE ROOT ACCOUNT STOP IMMEDIATELY.\e[0m" && exit 1
 echo -e "\n"
-echo "This script will delete your vault backups/data"
+echo -e "\e[31mTHIS SCRIPT WILL DELETE ALL YOUR BACKUPS FOR YOUR TENANT. This includes but isn't limited to loki backups and vault backups.\e[0m" 
 echo "Please enter your captain domain example: nonprod.earth.onglueops.rocks :"
 echo ""
 read CAPTAIN_DOMAIN
