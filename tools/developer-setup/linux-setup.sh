@@ -17,7 +17,7 @@ command_exists() {
 # Install jq if not present
 if ! command_exists jq; then
     echo "jq is not installed. Installing jq..."
-    sudo apt-get update -qq && sudo apt-get install -qq -y jq
+    sudo apt-get update -qq > /dev/null && sudo apt-get install -qq -y jq > /dev/null
 fi
 
 
@@ -69,7 +69,7 @@ echo "User glueops created with selected SSH key and passwordless sudo access."
 echo "Installing other requirements now"
 
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt-get update && sudo apt install tmux jq -y && sudo apt-get clean
-
+export DEBIAN_FRONTEND=noninteractive
 sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs sudo apt-get install -y
 sudo groupadd -f docker
 sudo usermod -aG docker glueops
