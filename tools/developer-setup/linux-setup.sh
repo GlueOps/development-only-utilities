@@ -65,3 +65,9 @@ sudo chown -R glueops:glueops /home/glueops/.ssh
 echo "glueops ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/glueops > /dev/null
 
 echo "User glueops created with selected SSH key and passwordless sudo access."
+
+echo "Installing other requirements now"
+
+curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt-get update && sudo apt install tmux jq -y && sudo apt-get clean
+
+echo "You are all set. Please log in with username `glueops` using the SSH Key you selected earlier."
