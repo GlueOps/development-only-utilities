@@ -1,6 +1,8 @@
 #!/bin/bash
-
+set -e
 # Prompt for GitHub username
+echo ""
+echo ""
 read -p "Enter your GitHub username: " USERNAME
 
 # Check if username is provided
