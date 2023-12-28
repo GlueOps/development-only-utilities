@@ -78,5 +78,5 @@ echo 1024 | sudo tee /proc/sys/fs/inotify/max_user_instances
 curl https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/developer-setup/.glueopsrc --output /home/glueops/.glueopsrc
 echo "source /home/glueops/.glueopsrc" >> /home/glueops/.bashrc
 sudo chown -R glueops:glueops /home/glueops
-
+sudo sed -i '/^PasswordAuthentication/s/^.*$/PasswordAuthentication no/' /etc/ssh/sshd_config && sudo sed -i '/^ChallengeResponseAuthentication/s/^.*$/ChallengeResponseAuthentication no/' /etc/ssh/sshd_config && sudo sed -i '/^PubkeyAuthentication/s/^.*$/PubkeyAuthentication yes/' /etc/ssh/sshd_config && grep -q '^PasswordAuthentication' /etc/ssh/sshd_config || echo 'PasswordAuthentication no' | sudo tee -a /etc/ssh/sshd_config && grep -q '^ChallengeResponseAuthentication' /etc/ssh/sshd_config || echo 'ChallengeResponseAuthentication no' | sudo tee -a /etc/ssh/sshd_config && grep -q '^PubkeyAuthentication' /etc/ssh/sshd_config || echo 'PubkeyAuthentication yes' | sudo tee -a /etc/ssh/sshd_config && sudo systemctl restart sshd
 echo "You are all set. Please log in with username `glueops` using the SSH Key you selected earlier."
