@@ -1,6 +1,14 @@
 dev() {
     if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-        tmux attach-session -t dev || tmux new-session -s dev
+        if tmux attach-session -t dev 2>/dev/null; then
+            # Successfully attached to existing session, do nothing more
+            :
+        else
+            # Creating a new tmux session and running a command
+            tmux new-session -s dev -d
+            tmux send-keys -t dev "dev" C-m
+            tmux attach-session -t dev
+        fi
     fi
     echo "Fetching the last 10 tags..."
     IFS=$'\n' tags=($(curl -s https://api.github.com/repos/GlueOps/codespaces/tags | jq -r '.[].name' | head -10))
