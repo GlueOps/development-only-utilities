@@ -40,8 +40,9 @@ bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilit
 - Login to AWS (Root/Master Organization)
 - Open [CloudShell](https://us-east-1.console.aws.amazon.com/cloudshell/home?region=us-west-2)
 
+```bash
  bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/main/tenant-s3-nuke.sh)
-
+```
 
 ## Create Chisel Exit Nodes using lightsail
 
@@ -50,4 +51,6 @@ bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilit
 - Select AWS Region to deploy exit nodes into
 - Go to Lightsail page and launch cloud shell and run:
 
+```bash
  bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/aws/lightsail.sh)
+```
