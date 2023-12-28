@@ -1,12 +1,14 @@
 #!/bin/bash
 
-# Check if GitHub username is provided
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <github-username>"
+# Prompt for GitHub username
+read -p "Enter your GitHub username: " USERNAME
+
+# Check if username is provided
+if [ -z "$USERNAME" ]; then
+    echo "No GitHub username entered. Exiting."
     exit 1
 fi
 
-USERNAME="$1"
 URL="https://api.github.com/users/$USERNAME/keys"
 
 # Fetch the SSH keys
