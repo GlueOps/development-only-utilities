@@ -80,7 +80,7 @@ sudo usermod -aG docker glueops
 echo 'fs.inotify.max_user_instances=1024' | sudo tee -a /etc/sysctl.conf
 echo 1024 | sudo tee /proc/sys/fs/inotify/max_user_instances
 curl https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/developer-setup/.glueopsrc --output /home/glueops/.glueopsrc
-echo "source /home/glueops/.glueopsrc" >> /home/glueops/.bashrc
+echo "source /home/glueops/.glueopsrc" | sudo tee -a /home/glueops/.bashrc
 sudo chown -R glueops:glueops /home/glueops
 # disables the password for the current user (ex. root/admin/ubuntu users)
 sudo passwd -d $USER
