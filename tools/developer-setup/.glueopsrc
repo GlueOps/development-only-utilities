@@ -1,0 +1,40 @@
+dev() {
+    if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+        tmux attach-session -t dev || tmux new-session -s dev
+    fi
+    echo "Fetching the last 10 tags..."
+    IFS=$'\n' tags=($(curl -s https://api.github.com/repos/GlueOps/codespaces/tags | jq -r '.[].name' | head -10))
+
+    # Check for cached images
+    cached_images=$(sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep "ghcr.io/glueops/codespaces")
+
+    # Add a custom option and check if each tag is cached
+    tags+=("Custom")
+    for i in "${!tags[@]}"; do
+        if echo "$cached_images" | grep -q "${tags[$i]}"; then
+            tags[$i]="${tags[$i]} (cached)"
+        fi
+    done
+
+    PS3="Please select a tag (or 'Custom' to enter one): "
+    select tag in "${tags[@]}"; do
+        # Remove the (cached) part from the tag if present
+        selected_tag="${tag/(cached)/}"
+        selected_tag="${selected_tag// /}"
+
+        if [[ -z "$selected_tag" ]]; then
+            echo "Invalid selection. Please try again."
+        elif [ "$selected_tag" == "Custom" ]; then
+            read -p "Enter custom tag: " customTag
+            export CONTAINER_TAG_TO_USE=$customTag
+            echo "CONTAINER_TAG_TO_USE set to $customTag"
+            break
+        else
+            export CONTAINER_TAG_TO_USE=$selected_tag
+            echo "CONTAINER_TAG_TO_USE set to $selected_tag"
+            break
+        fi
+    done
+
+    mkdir -p workspaces/glueops; sudo docker run -it --net=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --init -v `pwd`/workspaces/glueops:/workspaces/glueops -v /var/run/docker.sock:/var/run/docker.sock -u vscode -w /workspaces/glueops ghcr.io/glueops/codespaces:${CONTAINER_TAG_TO_USE} bash -c "code tunnel --verbose --log trace"
+}
