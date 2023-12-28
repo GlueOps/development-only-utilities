@@ -17,7 +17,7 @@ command_exists() {
 # Install jq if not present
 if ! command_exists jq; then
     echo "jq is not installed. Installing jq..."
-    sudo apt-get update && sudo apt-get install -y jq
+    sudo apt-get update -qq && sudo apt-get install -qq -y jq
 fi
 
 
