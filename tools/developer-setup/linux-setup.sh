@@ -75,8 +75,8 @@ sudo groupadd -f docker
 sudo usermod -aG docker glueops
 echo 'fs.inotify.max_user_instances=1024' | sudo tee -a /etc/sysctl.conf
 echo 1024 | sudo tee /proc/sys/fs/inotify/max_user_instances
+curl https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/developer-setup/.glueopsrc --output /home/glueops/.glueopsrc
 echo "source /home/glueops/.glueopsrc" >> /home/glueops/.bashrc
-
 sudo chown -R glueops:glueops /home/glueops
 
 echo "You are all set. Please log in with username `glueops` using the SSH Key you selected earlier."
