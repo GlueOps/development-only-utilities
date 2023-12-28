@@ -33,7 +33,7 @@ if [ ${#KEYS[@]} -eq 0 ]; then
 fi
 
 # Display keys and let user select one
-echo "Select a key by number:"
+echo -e "\n\nPlease select the public SSH key you want to use to authenticate with this node:\n"
 for i in "${!KEYS[@]}"; do
     echo "$((i+1))) ${KEYS[$i]}"
 done
@@ -46,6 +46,8 @@ if [ "$choice" -lt 0 ] || [ "$choice" -ge "${#KEYS[@]}" ]; then
     echo "Invalid choice"
     exit 1
 fi
+
+echo -e "\n\nEverything is now getting setup. This process will take a few minutes...\n\n"
 
 SELECTED_KEY="${KEYS[$choice]}"
 
@@ -69,8 +71,8 @@ echo "User glueops created with selected SSH key and passwordless sudo access."
 echo "Installing other requirements now"
 
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt-get update && sudo apt install tmux jq -y && sudo apt-get clean
-export DEBIAN_FRONTEND=noninteractive
-sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs sudo apt-get install -y
+#export DEBIAN_FRONTEND=noninteractive
+#sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs sudo apt-get install -y
 sudo groupadd -f docker
 sudo usermod -aG docker glueops
 echo 'fs.inotify.max_user_instances=1024' | sudo tee -a /etc/sysctl.conf
@@ -81,6 +83,6 @@ sudo chown -R glueops:glueops /home/glueops
 # disables the password for the current user (ex. root/admin/ubuntu users)
 sudo passwd -d $USER
 server_ip=$(echo $SSH_CONNECTION | awk '{print $3}')
-echo -e "This machine is now being restarted and will disconnect your session. \n\n"
-echo -e "Please login with ssh glueops@$server_ip using the SSH Key you selected earlier. \n\n"
+echo -e "\n\n\n\n\nThis machine is now being restarted and will disconnect your session. \n\n"
+echo -e "Please login with 'ssh glueops@$server_ip' using the SSH Key you selected earlier. \n\n"
 sudo reboot
