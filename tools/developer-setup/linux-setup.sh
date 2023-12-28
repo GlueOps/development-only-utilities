@@ -72,7 +72,7 @@ echo "User glueops created with selected SSH key and passwordless sudo access."
 
 echo "Installing other requirements now"
 
-curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt-get update && sudo apt install tmux jq -y && sudo apt-get clean
+curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt-get update && sudo apt install tmux jq figlet -y && sudo apt-get clean
 #export DEBIAN_FRONTEND=noninteractive
 #sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs sudo apt-get install -y
 sudo groupadd -f docker
@@ -85,6 +85,9 @@ sudo chown -R glueops:glueops /home/glueops
 # disables the password for the current user (ex. root/admin/ubuntu users)
 sudo passwd -d $USER
 server_ip=$(echo $SSH_CONNECTION | awk '{print $3}')
+echo ""
+echo ""
+sudo figlet GlueOps | sudo tee /etc/motd
 echo -e "\n\n\n\n\nThis machine is now being restarted and will disconnect your session. \n\n"
 echo -e "Please login with 'ssh glueops@$server_ip' using the SSH Key you selected earlier. \n\n"
 sudo reboot
