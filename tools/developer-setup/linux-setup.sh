@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Function to check if a command exists
+command_exists() {
+    type "$1" &> /dev/null ;
+}
+
+# Install jq if not present
+if ! command_exists jq; then
+    echo "jq is not installed. Installing jq..."
+    sudo apt-get update && sudo apt-get install -y jq
+fi
+
+
 # Prompt for GitHub username
 read -p "Enter your GitHub username: " USERNAME
 
