@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Prompt for GitHub username
+read -p "Enter your GitHub username: " USERNAME
+
+# Check if username is provided
+if [ -z "$USERNAME" ]; then
+    echo "No GitHub username entered. Exiting."
+    exit 1
+fi
+
 # Function to check if a command exists
 command_exists() {
     type "$1" &> /dev/null ;
@@ -11,15 +20,6 @@ if ! command_exists jq; then
     sudo apt-get update && sudo apt-get install -y jq
 fi
 
-
-# Prompt for GitHub username
-read -p "Enter your GitHub username: " USERNAME
-
-# Check if username is provided
-if [ -z "$USERNAME" ]; then
-    echo "No GitHub username entered. Exiting."
-    exit 1
-fi
 
 URL="https://api.github.com/users/$USERNAME/keys"
 
