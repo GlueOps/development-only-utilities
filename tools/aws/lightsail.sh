@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # Ask for the instance name prefix
 read -p "Enter the captain_domain for your Lightsail instances: " captain_domain
 credentials_for_chisel=$(< /dev/random tr -dc 'A-Za-z0-9' | head -c 15; echo)":"$(< /dev/random tr -dc 'A-Za-z0-9' | head -c 15; echo)
