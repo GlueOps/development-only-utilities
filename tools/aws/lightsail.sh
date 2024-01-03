@@ -19,8 +19,11 @@ fi
 
 echo "Detected Region: $AWS_REGION"
 echo "Using Availability Zone: $first_az"
+echo "Chisel credentials: $credentials_for_chisel"
+echo "Lightsail bundle_id: $bundle_id"
+echo "OS: $blueprint_id"
 
-
+echo "Creating cloud init data"
 read -r -d '' user_data <<EOF
 #!/bin/bash
 # Install docker
