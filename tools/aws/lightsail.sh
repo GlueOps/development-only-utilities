@@ -5,7 +5,8 @@ read -p "Enter the captain_domain for your Lightsail instances: " captain_domain
 read -p "Enter the username:password for your chisel Exit nodes: " credentials_for_chisel
 
 # Define common parameters
-bundle_id="nano_3_0"  # Example: nano instance plan
+# these vary by region so we assume the first one is always the cheapest
+bundle_id = $(aws lightsail get-bundles --query 'bundles[0].bundleId' --output text)
 blueprint_id="debian_12"  # Example: Debian 12 OS
 
 
