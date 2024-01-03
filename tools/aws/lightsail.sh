@@ -32,7 +32,7 @@ else
     exit 1
 fi
 
-read -p "Enter the captain_domain for your Lightsail instances: " captain_domain
+read -p "Enter your CAPTAIN_DOMAIN: " captain_domain
 
 # Rest of your script using $selected_region_code
 
