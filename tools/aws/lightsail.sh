@@ -105,7 +105,9 @@ echo "Lightsail bundle_id: $bundle_id"
 echo "OS: $blueprint_id"
 
 user_data="#!/bin/bash
-# Install docker
+
+# Some regions appear to be problematic on DNS resolution
+sleep 15;
 
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt install tmux -y
 
