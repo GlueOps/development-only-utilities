@@ -3,29 +3,29 @@
 set -e 
 
 
-# Ask for the instance name prefix
-region_data=$(aws lightsail get-regions --query 'regions[*].[name,description]' --output text)
-# Convert the region data into an array
-IFS=$'\t' read -r -a region_array <<< "$region_data"
+# Fetch the list of Lightsail regions using AWS CLI
+# Including both the region code and the friendly name
+mapfile -t region_data < <(aws lightsail get-regions --query 'regions[*].[name,description]' --output text)
 
 # Display the regions and prompt the user to select one
 echo "Please select a region:"
-for (( i=0; i<${#region_array[@]}; i+=2 )); do
-    region_code="${region_array[i]}"
-    region_name="${region_array[i+1]}"
+for (( i=0; i<${#region_data[@]}; i+=2 )); do
+    region_code="${region_data[i]}"
+    region_name="${region_data[i+1]}"
     printf "%d) %s (%s)\n" $((i/2+1)) "$region_code" "$region_name"
 done
 
 # Read user input
-read -p "Enter the number of your choice (1-$((${#region_array[@]}/2))): " choice
+num_regions=$(((${#region_data[@]} + 1) / 2))
+read -p "Enter the number of your choice (1-$num_regions): " choice
 
 # Calculate the actual index of the selected region
 real_index=$((choice * 2 - 2))
 
 # Validate input
-if [[ $choice -ge 1 && $real_index -lt ${#region_array[@]} ]]; then
-    selected_region_code="${region_array[$real_index]}"
-    selected_region_name="${region_array[$real_index+1]}"
+if [[ $choice -ge 1 && $choice -le $num_regions ]]; then
+    selected_region_code="${region_data[$real_index]}"
+    selected_region_name="${region_data[$real_index+1]}"
     echo "You selected: $selected_region_code ($selected_region_name)"
 else
     echo "Invalid choice. Please run the script again and select a valid number."
