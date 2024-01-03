@@ -36,7 +36,8 @@ fi
 
 
 read -p "Enter your CAPTAIN_DOMAIN: " temp_captain_domain
-captain_domain=$(echo "$temp_captain_domain" | tr -d ' ')
+captain_domain=$(echo "$temp_captain_domain" | tr -d '[:space:]')
+
 
 
 # Rest of your script using $selected_region_code
