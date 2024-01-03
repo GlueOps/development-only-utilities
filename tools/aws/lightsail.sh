@@ -2,35 +2,41 @@
 
 set -e 
 
+#!/bin/bash
 
 # Fetch the list of Lightsail regions using AWS CLI
 # Including both the region code and the friendly name
-mapfile -t region_data < <(aws lightsail get-regions --query 'regions[*].[name,description]' --output text)
+region_data=$(aws lightsail get-regions --query 'regions[*].[name,description]' --output text)
+
+# Split the region data into an array by newline
+IFS=$'\n' read -r -a region_array <<< "$region_data"
 
 # Display the regions and prompt the user to select one
 echo "Please select a region:"
-for (( i=0; i<${#region_data[@]}; i+=2 )); do
-    region_code="${region_data[i]}"
-    region_name="${region_data[i+1]}"
-    printf "%d) %s (%s)\n" $((i/2+1)) "$region_code" "$region_name"
+for (( i=0; i<${#region_array[@]}; i++ )); do
+    # Split each line into code and description
+    IFS=$'\t' read -r region_code region_name <<< "${region_array[i]}"
+    printf "%d) %s (%s)\n" $((i+1)) "$region_code" "$region_name"
 done
 
 # Read user input
-num_regions=$(((${#region_data[@]} + 1) / 2))
-read -p "Enter the number of your choice (1-$num_regions): " choice
+read -p "Enter the number of your choice (1-${#region_array[@]}): " choice
 
-# Calculate the actual index of the selected region
-real_index=$((choice * 2 - 2))
+# Adjust the choice to align with array indexing
+adjusted_choice=$((choice - 1))
 
 # Validate input
-if [[ $choice -ge 1 && $choice -le $num_regions ]]; then
-    selected_region_code="${region_data[$real_index]}"
-    selected_region_name="${region_data[$real_index+1]}"
+if [[ $choice -ge 1 && $choice -le ${#region_array[@]} ]]; then
+    # Extract the selected region code and name
+    IFS=$'\t' read -r selected_region_code selected_region_name <<< "${region_array[adjusted_choice]}"
     echo "You selected: $selected_region_code ($selected_region_name)"
 else
     echo "Invalid choice. Please run the script again and select a valid number."
     exit 1
 fi
+
+# Rest of your script using $selected_region_code
+
 
 read -p "Enter your CAPTAIN_DOMAIN: " captain_domain
 
