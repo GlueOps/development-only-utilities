@@ -1,12 +1,14 @@
 #!/bin/bash
 
+set -e
+
 # Ask for the instance name prefix
 read -p "Enter the captain_domain for your Lightsail instances: " captain_domain
 read -p "Enter the username:password for your chisel Exit nodes: " credentials_for_chisel
 
 # Define common parameters
 # these vary by region so we assume the first one is always the cheapest
-bundle_id = $(aws lightsail get-bundles --query 'bundles[0].bundleId' --output text)
+bundle_id=$(aws lightsail get-bundles --query 'bundles[0].bundleId' --output text)
 blueprint_id="debian_12"  # Example: Debian 12 OS
 
 
