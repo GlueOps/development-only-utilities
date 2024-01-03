@@ -11,32 +11,38 @@ export AWS_DEFAULT_REGION=$1
 set_region "us-west-2"
 
 
-# Fetch the list of Lightsail regions using AWS CLI
-regions=$(aws lightsail get-regions --query 'regions[*].name' --output text)
-
-# Initialize an empty array to hold the regions
-region_array=()
-
-# Read each region into the array
-while read -r region; do
-    region_array+=("$region")
-done <<< "$(echo "$regions" | tr ' ' '\n')"
+# List of available regions
+regions=(
+    "us-east-1"
+    "us-east-2"
+    "us-west-2"
+    "eu-west-1"
+    "eu-west-2"
+    "eu-west-3"
+    "eu-central-1"
+    "ap-southeast-1"
+    "ap-southeast-2"
+    "ap-northeast-1"
+    "ap-northeast-2"
+    "ap-south-1"
+    "ca-central-1"
+    "eu-north-1"
+)
 
 # Display the regions and prompt the user to select one
 echo "Please select a region:"
-for i in "${!region_array[@]}"; do
-    printf "%d) %s\n" $((i+1)) "${region_array[i]}"
+for i in "${!regions[@]}"; do
+    printf "%d) %s\n" $((i+1)) "${regions[i]}"
 done
 
 # Read user input
-read -p "Enter the number of your choice (1-${#region_array[@]}): " choice
+read -p "Enter the number of your choice (1-${#regions[@]}): " choice
 
 # Validate input
-if [[ $choice -ge 1 && $choice -le ${#region_array[@]} ]]; then
-    selected_region=${region_array[$((choice-1))]}
+if [[ $choice -ge 1 && $choice -le ${#regions[@]} ]]; then
+    selected_region=${regions[$((choice-1))]}
     echo "You selected: $selected_region"
-    # Call set_region function with the selected region
-    set_region "$selected_region"
+    set_region $selected_region
 else
     echo "Invalid choice. Please run the script again and select a valid number."
     exit 1
