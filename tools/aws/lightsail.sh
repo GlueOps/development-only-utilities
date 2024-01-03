@@ -11,10 +11,10 @@ export AWS_DEFAULT_REGION=$1
 set_region "us-west-2"
 
 # Fetch the list of Lightsail regions using AWS CLI
-regions=$(aws lightsail get-regions --query 'regions[*].name' --output text | tr '\t' '\n')
+regions=$(aws lightsail get-regions --query 'regions[*].name' --output text)
 
-# Convert the regions into an array
-IFS=$'\n' read -r -a region_array <<< "$regions"
+# Convert the regions into an array, splitting by spaces
+IFS=' ' read -r -a region_array <<< "$regions"
 
 # Display the regions and prompt the user to select one
 echo "Please select a region:"
@@ -35,6 +35,7 @@ else
     echo "Invalid choice. Please run the script again and select a valid number."
     exit 1
 fi
+
 
 # Rest of your script
 
