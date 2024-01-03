@@ -38,6 +38,7 @@ EOF
 
 # Function to create a Lightsail instance
 create_instance() {
+    echo "About to create instance $1"
 
     local instance_name=$1
     local user_data=$2  # Cloud-init user data script content
@@ -55,6 +56,7 @@ create_instance() {
 
 open_firewall() {
     instance_name=$1
+    echo "About to  open ports for $instance_name"
 
     # Open all ports
     aws lightsail open-instance-public-ports --instance-name "$instance_name" --port-info fromPort=0,toPort=65535,protocol=all
