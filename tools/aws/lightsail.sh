@@ -26,16 +26,14 @@ echo "Chisel credentials: $credentials_for_chisel"
 echo "Lightsail bundle_id: $bundle_id"
 echo "OS: $blueprint_id"
 
-echo "Creating cloud init data"
-read -r -d '' user_data <<EOF
-#!/bin/bash
+user_data='#!/bin/bash
 # Install docker
 
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt install tmux -y
 
 # Run chisel
-sudo docker run -d -p 9090:9090 -p 443:443 -p 80:80 -it jpillora/chisel server --reverse --port=9090 --auth='$credentials_for_chisel'
-EOF
+sudo docker run -d -p 9090:9090 -p 443:443 -p 80:80 -it jpillora/chisel server --reverse --port=9090 --auth='"'"'$credentials_for_chisel'"'"'
+'
 
 ## To debug the userdata/launch script just open up a terminal in the vm and cat /var/log/cloud-init-output.log
 ## ref: https://aws.amazon.com/blogs/compute/create-use-and-troubleshoot-launch-scripts-on-amazon-lightsail/
