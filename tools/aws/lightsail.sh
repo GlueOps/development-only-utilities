@@ -4,7 +4,7 @@ set -e
 
 # Ask for the instance name prefix
 read -p "Enter the captain_domain for your Lightsail instances: " captain_domain
-read -p "Enter the username:password for your chisel Exit nodes: " credentials_for_chisel
+credentials_for_chisel=$(< /dev/random tr -dc 'A-Za-z0-9' | head -c 15; echo)":"$(< /dev/random tr -dc 'A-Za-z0-9' | head -c 15; echo)
 
 # Define common parameters
 # these vary by region so we assume the first one is always the cheapest
