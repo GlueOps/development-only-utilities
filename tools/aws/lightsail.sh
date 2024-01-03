@@ -4,38 +4,43 @@ set -e
 
 #!/bin/bash
 
-# Fetch the list of Lightsail regions using AWS CLI
-# Including both the region code and the friendly name
-region_data=$(aws lightsail get-regions --query 'regions[*].[name,description]' --output text)
-
-# Split the region data into an array by newline
-IFS=$'\n' read -r -a region_array <<< "$region_data"
+regions=(
+    "us-east-1"
+    "us-east-2"
+    "us-west-2"
+    "eu-west-1"
+    "eu-west-2"
+    "eu-west-3"
+    "eu-central-1"
+    "ap-southeast-1"
+    "ap-southeast-2"
+    "ap-northeast-1"
+    "ap-northeast-2"
+    "ap-south-1"
+    "ca-central-1"
+    "eu-north-1"
+)
 
 # Display the regions and prompt the user to select one
 echo "Please select a region:"
-for (( i=0; i<${#region_array[@]}; i++ )); do
-    # Split each line into code and description
-    IFS=$'\t' read -r region_code region_name <<< "${region_array[i]}"
-    printf "%d) %s (%s)\n" $((i+1)) "$region_code" "$region_name"
+for i in "${!regions[@]}"; do
+    printf "%d) %s\n" $((i+1)) "${regions[i]}"
 done
 
 # Read user input
-read -p "Enter the number of your choice (1-${#region_array[@]}): " choice
-
-# Adjust the choice to align with array indexing
-adjusted_choice=$((choice - 1))
+read -p "Enter the number of your choice (1-${#regions[@]}): " choice
 
 # Validate input
-if [[ $choice -ge 1 && $choice -le ${#region_array[@]} ]]; then
-    # Extract the selected region code and name
-    IFS=$'\t' read -r selected_region_code selected_region_name <<< "${region_array[adjusted_choice]}"
-    echo "You selected: $selected_region_code ($selected_region_name)"
+if [[ $choice -ge 1 && $choice -le ${#regions[@]} ]]; then
+    selected_region=${regions[$((choice-1))]}
+    echo "You selected: $selected_region"
+    export AWS_REGION=selected_region
 else
     echo "Invalid choice. Please run the script again and select a valid number."
     exit 1
 fi
 
-# Rest of your script using $selected_region_code
+
 
 
 read -p "Enter your CAPTAIN_DOMAIN: " captain_domain
