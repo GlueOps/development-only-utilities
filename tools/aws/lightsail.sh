@@ -11,10 +11,16 @@ export AWS_DEFAULT_REGION=$1
 set_region "us-west-2"
 
 
-regions=$(aws lightsail get-regions --query 'regions[*].name' --output text | tr ' ' '\n')
+# Fetch the list of Lightsail regions using AWS CLI
+regions=$(aws lightsail get-regions --query 'regions[*].name' --output text)
 
-# Convert the regions into an array, splitting by newline
-IFS=$'\n' read -r -a region_array <<< "$regions"
+# Initialize an empty array to hold the regions
+region_array=()
+
+# Read each region into the array
+while read -r region; do
+    region_array+=("$region")
+done <<< "$(echo "$regions" | tr ' ' '\n')"
 
 # Display the regions and prompt the user to select one
 echo "Please select a region:"
