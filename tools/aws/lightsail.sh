@@ -10,8 +10,25 @@ export AWS_DEFAULT_REGION=$1
 # Fetch the list of Lightsail regions using AWS CLI
 set_region "us-west-2"
 
+declare -A region_names
+region_names=(
+    ["us-east-1"]="US East (N. Virginia)"
+    ["us-east-2"]="US East (Ohio)"
+    ["us-west-2"]="US West (Oregon)"
+    ["eu-west-1"]="EU (Ireland)"
+    ["eu-west-2"]="EU (London)"
+    ["eu-west-3"]="EU (Paris)"
+    ["eu-central-1"]="EU (Frankfurt)"
+    ["ap-southeast-1"]="Asia Pacific (Singapore)"
+    ["ap-southeast-2"]="Asia Pacific (Sydney)"
+    ["ap-northeast-1"]="Asia Pacific (Tokyo)"
+    ["ap-northeast-2"]="Asia Pacific (Seoul)"
+    ["ap-south-1"]="Asia Pacific (Mumbai)"
+    ["ca-central-1"]="Canada (Central)"
+    ["eu-north-1"]="EU (Stockholm)"
+)
 
-# List of available regions
+# Original regions array
 regions=(
     "us-east-1"
     "us-east-2"
@@ -29,10 +46,12 @@ regions=(
     "eu-north-1"
 )
 
-# Display the regions and prompt the user to select one
+# Display the regions with friendly names
 echo "Please select a region:"
 for i in "${!regions[@]}"; do
-    printf "%d) %s\n" $((i+1)) "${regions[i]}"
+    region_code="${regions[i]}"
+    friendly_name="${region_names[$region_code]}"
+    printf "%d) %s (%s)\n" $((i+1)) "$region_code" "$friendly_name"
 done
 
 # Read user input
