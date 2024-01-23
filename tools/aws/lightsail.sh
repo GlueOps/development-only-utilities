@@ -112,7 +112,7 @@ sleep 15;
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt install tmux -y
 
 # Run chisel
-sudo docker run -d -p 9090:9090 -p 443:443 -p 80:80 -it jpillora/chisel server --reverse --port=9090 --auth='$credentials_for_chisel'
+sudo docker run -d --restart always -p 9090:9090 -p 443:443 -p 80:80 -it jpillora/chisel server --reverse --port=9090 --auth='$credentials_for_chisel'
 "
 
 ## To debug the userdata/launch script just open up a terminal in the vm and cat /var/log/cloud-init-output.log
