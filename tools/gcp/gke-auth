@@ -39,7 +39,7 @@ gke-auth() {
 
     export USE_GKE_GCLOUD_AUTH_PLUGIN=True 
 
-    gcloud container clusters get-credentials gke \
+    gcloud container clusters get-credentials captain \
         --region $region \
         --project $project_id
 
