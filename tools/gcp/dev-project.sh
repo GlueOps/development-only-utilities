@@ -56,4 +56,8 @@ rm -f temp_key_pipe_creds
 
 ENV
 
+${GREEN}In your terraform you will want to use this project_id:${RESET}
+
+$project_id
+
 EOF
