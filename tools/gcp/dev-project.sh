@@ -52,7 +52,7 @@ rm -f temp_key_pipe_creds
 #gcloud container clusters get-credentials captain --region us-central1 --project $project_id
 
 ### This command below will destroy everything. It disables billing first and then deletes the project.
-### gcloud alpha billing projects unlink $project_id && gcloud projects delete $project_id
+### gcloud alpha billing projects unlink $project_id -q && gcloud projects delete $project_id -q
 
 ENV
 
