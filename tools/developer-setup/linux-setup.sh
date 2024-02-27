@@ -90,4 +90,7 @@ echo ""
 sudo figlet GlueOps | sudo tee /etc/motd
 echo -e "\n\n\n\n\nThis machine is now being restarted and will disconnect your session. \n\n"
 echo -e "Please login with 'ssh glueops@$server_ip' using the SSH Key you selected earlier. \n\n"
+
+# hack because vscode has permission issues when trying to use the docker cli
+sudo chmod 666 /var/run/docker.sock
 sudo reboot
