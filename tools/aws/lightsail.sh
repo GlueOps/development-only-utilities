@@ -112,7 +112,8 @@ sleep 15;
 curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo apt install tmux -y
 
 # Run chisel
-sudo docker run -d --restart always -p 9090:9090 -p 443:443 -p 80:80 -it jpillora/chisel server --reverse --port=9090 --auth='$credentials_for_chisel'
+sudo docker run -d --restart always -p 9090:9090 -p 9090:443 -it jpillora/chisel server --reverse --port=9090 --auth='$credentials_for_chisel'
+sudo docker run -d --restart always -p 9091:9090 -p 9091:443 -it jpillora/chisel server --reverse --port=9090 --auth='$credentials_for_chisel'
 "
 
 ## To debug the userdata/launch script just open up a terminal in the vm and cat /var/log/cloud-init-output.log
@@ -147,7 +148,7 @@ open_firewall() {
 }
 
 # Array of instances
-suffixes=("exit1" "exit2")
+suffixes=("exit1")
 
 # Loop through each suffix and perform operations
 for suffix in "${suffixes[@]}"; do
@@ -213,8 +214,8 @@ metadata:
   name: exit2
   namespace: chisel-operator-system
 spec:
-  host: "${ip_addresses["${captain_domain}-exit2"]}"
-  port: 9090
+  host: "${ip_addresses["${captain_domain}-exit1"]}"
+  port: 9091
   auth: selfhosted
 YAML
 EOF
