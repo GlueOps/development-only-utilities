@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 set -e
 # Prompt for GitHub username
 echo ""

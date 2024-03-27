@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 set -e 
 
@@ -104,7 +104,7 @@ echo "Chisel credentials: $credentials_for_chisel"
 echo "Lightsail bundle_id: $bundle_id"
 echo "OS: $blueprint_id"
 
-user_data="#!/bin/bash
+user_data="#!/bin/zsh
 
 # Some regions appear to be problematic on DNS resolution
 sleep 15;
