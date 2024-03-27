@@ -1,5 +1,6 @@
 #!/bin/zsh
-
+setopt ERR_EXIT
+setopt PIPE_FAIL
 
 # Save the current AWS environment variables
 
@@ -84,8 +85,6 @@ create_credentials_for_account() {
     # Display the credentials based on the format
     display_credentials $1
 }
-
-setopt ERR_EXIT
 
 # Call function for first account with 'first' format
 create_credentials_for_account first

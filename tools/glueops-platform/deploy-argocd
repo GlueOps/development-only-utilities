@@ -1,3 +1,6 @@
+#!/bin/zsh
+setopt ERR_EXIT
+setopt PIPE_FAIL
 
    deploy-argocd() {
     crd_version=""
@@ -41,7 +44,6 @@
         return
     fi
     
-    setopt ERR_EXIT
     kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=$crd_version" && \
     helm repo update && \
     helm install argocd argo/argo-cd --skip-crds --version $helm_version -f argocd.yaml --namespace=glueops-core --create-namespace && \

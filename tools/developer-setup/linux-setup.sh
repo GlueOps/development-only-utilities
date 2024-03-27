@@ -1,5 +1,7 @@
 #!/bin/zsh
 setopt ERR_EXIT
+setopt PIPE_FAIL
+
 # Prompt for GitHub username
 echo ""
 echo ""

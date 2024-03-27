@@ -1,6 +1,6 @@
 #!/bin/zsh
-
 setopt ERR_EXIT
+setopt PIPE_FAIL
 
 # Prompt for service code, quota code, and AWS region
 read -p "Enter the service code (e.g., 'ec2' for EC2): " SERVICE_CODE

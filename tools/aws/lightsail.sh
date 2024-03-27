@@ -1,6 +1,6 @@
 #!/bin/zsh
-
-setopt ERR_EXIT 
+setopt ERR_EXIT
+setopt PIPE_FAIL
 
 
 set_region() {

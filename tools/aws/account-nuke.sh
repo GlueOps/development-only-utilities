@@ -3,6 +3,8 @@
 ### Variables
 ##
 setopt ERR_EXIT
+setopt PIPE_FAIL
+
 echo -e "\n"
 AWS_NUKE_VERSION=v2.25.0
 
