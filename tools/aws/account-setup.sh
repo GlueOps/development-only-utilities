@@ -85,7 +85,7 @@ create_credentials_for_account() {
     display_credentials $1
 }
 
-set -e
+setopt ERR_EXIT
 
 # Call function for first account with 'first' format
 create_credentials_for_account first

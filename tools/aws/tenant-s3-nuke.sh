@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-set -e
+setopt ERR_EXIT
 echo -e "\n"
 
 [ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] || (echo -e "\e[31mTHIS IS NOT THE ROOT ACCOUNT STOP IMMEDIATELY.\e[0m" && exit 1)

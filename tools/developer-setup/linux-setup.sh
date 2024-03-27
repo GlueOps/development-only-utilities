@@ -1,5 +1,5 @@
 #!/bin/zsh
-set -e
+setopt ERR_EXIT
 # Prompt for GitHub username
 echo ""
 echo ""

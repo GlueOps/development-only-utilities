@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-set -e
+setopt ERR_EXIT
 
 service_account_id="svc-glueops-captain"
 # Generate a random project name

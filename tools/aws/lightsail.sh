@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-set -e 
+setopt ERR_EXIT 
 
 
 set_region() {

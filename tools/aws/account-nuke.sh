@@ -2,7 +2,7 @@
 ##
 ### Variables
 ##
-set -e
+setopt ERR_EXIT
 echo -e "\n"
 AWS_NUKE_VERSION=v2.25.0
 
