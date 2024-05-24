@@ -93,4 +93,7 @@ echo -e "Please login with 'ssh glueops@$server_ip' using the SSH Key you select
 
 # hack because vscode has permission issues when trying to use the docker cli
 sudo chmod 666 /var/run/docker.sock
+
+curl -fsSL https://tailscale.com/install.sh | sh
+
 sudo reboot
