@@ -46,7 +46,7 @@ ${GREEN}Run the following in your codespace environment to create your .env for 
 
 cat <<ENV >> \$(pwd)/.env
 export GOOGLE_CREDENTIALS='${creds}'
-echo \\\$GOOGLE_CREDENTIALS > temp_key_pipe_creds &
+echo -E \\\$GOOGLE_CREDENTIALS > temp_key_pipe_creds &
 gcloud auth activate-service-account --key-file=temp_key_pipe_creds
 rm -f temp_key_pipe_creds
 #gcloud container clusters get-credentials captain --region us-central1 --project $project_id
