@@ -185,7 +185,7 @@ echo "Apply this manifest to your development cluster:"
 echo ""
 echo ""
 cat <<EOF
-kubectl apply -k https://github.com/FyraLabs/chisel-operator?ref=v0.3.1
+kubectl apply -k https://github.com/FyraLabs/chisel-operator?ref=v0.3.4
 
 kubectl apply -f - <<YAML
 apiVersion: v1
