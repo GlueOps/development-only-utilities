@@ -4,19 +4,19 @@ set -e
 
 echo -e "\n\nEverything is now getting setup. This process will take a few minutes...\n\n"
 
-# Create user glueops
-sudo adduser --disabled-password --gecos "" glueops
+# Create user vscode
+sudo adduser --disabled-password --gecos "" vscode
 
-# Create .ssh directory for glueops
-sudo mkdir -p /home/glueops/.ssh
-sudo chmod 700 /home/glueops/.ssh
+# Create .ssh directory for vscode
+sudo mkdir -p /home/vscode/.ssh
+sudo chmod 700 /home/vscode/.ssh
 
-sudo touch /home/glueops/.ssh/authorized_keys 
-sudo chmod 600 /home/glueops/.ssh/authorized_keys
-sudo chown -R glueops:glueops /home/glueops/.ssh
+sudo touch /home/vscode/.ssh/authorized_keys 
+sudo chmod 600 /home/vscode/.ssh/authorized_keys
+sudo chown -R vscode:vscode /home/vscode/.ssh
 
-# Give glueops sudo access without a password
-echo "glueops ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/glueops > /dev/null
+# Give vscode sudo access without a password
+echo "vscode ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/vscode > /dev/null
 
 echo "Installing other requirements now"
 
@@ -24,18 +24,18 @@ curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && s
 #export DEBIAN_FRONTEND=noninteractive
 #sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs sudo apt-get install -y
 sudo groupadd -f docker
-sudo usermod -aG docker glueops
+sudo usermod -aG docker vscode
 echo 'fs.inotify.max_user_instances=1024' | sudo tee -a /etc/sysctl.conf
 echo 1024 | sudo tee /proc/sys/fs/inotify/max_user_instances
-sudo curl https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/developer-setup/.glueopsrc --output /home/glueops/.glueopsrc
-echo "source /home/glueops/.glueopsrc" | sudo tee -a /home/glueops/.bashrc
-sudo chown -R glueops:glueops /home/glueops
+sudo curl https://raw.githubusercontent.com/vscode/development-only-utilities/main/tools/developer-setup/.vscoderc --output /home/vscode/.vscoderc
+echo "source /home/vscode/.vscoderc" | sudo tee -a /home/vscode/.bashrc
+sudo chown -R vscode:vscode /home/vscode
 # disables the password for the current user (ex. root/admin/ubuntu users)
 sudo passwd -d $USER
 server_ip=$(echo $SSH_CONNECTION | awk '{print $3}')
 echo ""
 echo ""
-sudo figlet GlueOps | sudo tee /etc/motd
+sudo figlet vscode | sudo tee /etc/motd
 echo -e "\n\n\n\n\nThis machine is now being restarted and will disconnect your session. \n\n"
 
 sudo reboot
