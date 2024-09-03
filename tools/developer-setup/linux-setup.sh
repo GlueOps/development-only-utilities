@@ -27,15 +27,15 @@ sudo groupadd -f docker
 sudo usermod -aG docker vscode
 echo 'fs.inotify.max_user_instances=1024' | sudo tee -a /etc/sysctl.conf
 echo 1024 | sudo tee /proc/sys/fs/inotify/max_user_instances
-sudo curl https://raw.githubusercontent.com/vscode/development-only-utilities/main/tools/developer-setup/.vscoderc --output /home/vscode/.vscoderc
-echo "source /home/vscode/.vscoderc" | sudo tee -a /home/vscode/.bashrc
+sudo curl https://raw.githubusercontent.com/vscode/development-only-utilities/main/tools/developer-setup/.glueopsrc --output /home/vscode/.glueopsrc
+echo "source /home/vscode/.glueopsrc" | sudo tee -a /home/vscode/.bashrc
 sudo chown -R vscode:vscode /home/vscode
 # disables the password for the current user (ex. root/admin/ubuntu users)
 sudo passwd -d $USER
 server_ip=$(echo $SSH_CONNECTION | awk '{print $3}')
 echo ""
 echo ""
-sudo figlet vscode | sudo tee /etc/motd
+sudo figlet GlueOps | sudo tee /etc/motd
 echo -e "\n\n\n\n\nThis machine is now being restarted and will disconnect your session. \n\n"
 
 sudo reboot
