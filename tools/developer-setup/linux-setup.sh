@@ -38,4 +38,8 @@ echo ""
 #sudo figlet GlueOps | sudo tee /etc/motd
 { echo -e "\e[1;32m$(figlet GlueOps)\e[0m"; echo ""; echo -e "\e[1;34mPlease log in as user 'vscode' or switch to that user by running:\e[0m"; echo ""; echo -e "\e[1;33m    sudo su - vscode\e[0m"; echo ""; echo -e "\e[1;34mAfter switching to the 'vscode' user, run the following command:\e[0m"; echo ""; echo -e "\e[1;33m    dev\e[0m"; } | sudo tee /etc/motd
 
-echo -e "\n\n\n\n\nPlease reboot with using: sudo reboot \n\n"
+#Install tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+
+
+echo -e "\n\n\n\n\nPlease reboot using: sudo reboot \n\n"
