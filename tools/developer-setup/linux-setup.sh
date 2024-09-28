@@ -5,7 +5,7 @@ set -e
 echo -e "\n\nEverything is now getting setup. This process will take a few minutes...\n\n"
 
 # Create user vscode
-sudo adduser --disabled-password --uid 1337 --gecos "" vscode
+sudo adduser --disabled-password --gecos "" vscode
 
 # Create .ssh directory for vscode
 sudo mkdir -p /home/vscode/.ssh
