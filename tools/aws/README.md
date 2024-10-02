@@ -57,7 +57,7 @@ bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilit
 
 
 
-## Creating AWS Extended Roles Configuration:
+## Creating AWS Extend Switch Roles Configuration:
 
 - Launch [AWS CloudShell](https://us-west-2.console.aws.amazon.com/cloudshell/home?region=us-west-2) 
 - Run this command in the cloudshell session:
