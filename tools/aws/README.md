@@ -54,3 +54,13 @@ bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilit
 ```bash
  bash <(curl -s https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/aws/lightsail.sh)
 ```
+
+
+
+## Creating AWS Extended Roles Configuration:
+
+- Launch [AWS CloudShell](https://us-west-2.console.aws.amazon.com/cloudshell/home?region=us-west-2) 
+- Run this command in the cloudshell session:
+```bash
+curl -sL https://raw.githubusercontent.com/GlueOps/development-only-utilities/main/tools/aws/AWS-Extend-Switch-Roles-Configuration-Generator.py | python3
+```
