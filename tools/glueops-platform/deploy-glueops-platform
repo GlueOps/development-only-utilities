@@ -34,7 +34,6 @@
         return
     fi
     
-    set -e
     helm repo add glueops-platform https://helm.gpkg.io/platform && \
     helm repo update && \
     helm install glueops-platform glueops-platform/glueops-platform --version $version -f platform.yaml --namespace=glueops-core
