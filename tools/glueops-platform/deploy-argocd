@@ -41,7 +41,6 @@
         return
     fi
     
-    set -e
     kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=$crd_version" && \
     helm repo update && \
     helm install argocd argo/argo-cd --skip-crds --version $helm_version -f argocd.yaml --namespace=glueops-core --create-namespace && \
