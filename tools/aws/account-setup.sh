@@ -12,8 +12,7 @@ display_credentials() {
     GREEN=$'\033[32m'
     RESET=$'\033[0m'
     
-    if [ "$1" = "first" ]; then
-        cat << EOF
+cat << EOF
 ${GREEN}Run the following in your codespace environment to create your .env for $ACCOUNT_NAME:${RESET}
 
 cat <<ENV >> \$(pwd)/.env
@@ -27,16 +26,6 @@ ${GREEN}Here is the iam_role_to_assume that you will need to specify in your ter
 
 ${ARN_OF_ROLE_CREATED}
 EOF
-    else
-    cat << EOF
-${GREEN}WAF Credentials for $ACCOUNT_NAME:${RESET}
-
-AWS_ACCESS_KEY_ID=${accessKey}
-AWS_SECRET_ACCESS_KEY=${secretKey}
-
-
-EOF
-    fi
 }
 
 ### Function to create credentials for an account
@@ -94,9 +83,3 @@ export AWS_SESSION_TOKEN=$ORIGINAL_AWS_SESSION_TOKEN
 export AWS_ACCESS_KEY_ID=$ORIGINAL_AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY=$ORIGINAL_AWS_SECRET_ACCESS_KEY
 
-# Call function for second account with 'second' format
-create_credentials_for_account second
-
-export AWS_SESSION_TOKEN=$ORIGINAL_AWS_SESSION_TOKEN
-export AWS_ACCESS_KEY_ID=$ORIGINAL_AWS_ACCESS_KEY_ID
-export AWS_SECRET_ACCESS_KEY=$ORIGINAL_AWS_SECRET_ACCESS_KEY
