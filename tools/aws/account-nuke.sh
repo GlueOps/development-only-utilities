@@ -16,7 +16,7 @@ wget https://github.com/ekristen/aws-nuke/releases/download/$AWS_NUKE_VERSION/aw
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
 
 cat << 'EOF' > nuke.yaml
-account-blocklist:
+blocklist:
 - "0123456789" # Keep listing any accounts you want to ensure do NOT get touched. If you did this properly and are using IAM credentials that only have access to your sub account then this is less important and could be left with this default/invalid value
 
 accounts:
