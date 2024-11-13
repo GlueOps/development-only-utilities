@@ -6,9 +6,9 @@ set -e
 echo -e "\n"
 AWS_NUKE_VERSION=v3.29.5
 
-[ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] && echo -e "\e[32mTHIS IS THE ROOT ACCOUNT. PLEASE PROCEED\e[0m" || echo -e "\e[31mTHIS IS NOT THE ROOT ACCOUNT STOP IMMEDIATELY.\e[0m"
+[ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] && echo -e "\e[32mCHECKS PASSED. PLEASE PROCEED\e[0m" || echo -e "\e[31mYOU MUST RUN THIS FROM THE ROOT ORG ACCOUNT. STOP IMMEDIATELY.\e[0m"
 echo -e "\n"
-echo "Please enter your AWS account name. It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):"
+echo -e "\e[31mPlease enter your AWS account name. This account will have ALL of it's resources destroyed! It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):\e[0m"
 echo ""
 read ACCOUNT_NAME
 echo -e "\n"
@@ -37,16 +37,26 @@ presets:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
 
-resource-types:
-  excludes:
-    # don't nuke OpenSearch Packages, see https://github.com/rebuy-de/aws-nuke/issues/1123
-    - OSPackage
-
-
 regions: #this regions list was last updated on October 10, 2023.
 - global
 - us-west-2
 - us-east-1
+- us-east-2
+- us-west-1
+- ap-south-1
+- ap-northeast-3
+- ap-northeast-2
+- ap-southeast-1
+- ap-southeast-2
+- ap-northeast-1
+- ca-central-1
+- eu-central-1
+- eu-west-1
+- eu-west-2
+- eu-west-3
+- eu-north-1
+- sa-east-1
+
 
 EOF
 
