@@ -70,7 +70,7 @@ export AWS_SECRET_ACCESS_KEY=$secretAccessKey
 export AWS_DEFAULT_REGION=us-west-2
 
 
-./aws-nuke nike -c nuke.yaml --no-dry-run --force
+./aws-nuke nuke -c nuke.yaml --no-dry-run --force
 
 rm nuke.yaml
 rm aws-nuke
