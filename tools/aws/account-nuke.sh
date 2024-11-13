@@ -80,7 +80,7 @@ export AWS_SECRET_ACCESS_KEY=$secretAccessKey
 export AWS_DEFAULT_REGION=us-west-2
 
 
-./aws-nuke nuke -c nuke.yaml --max-wait-retries 200 --no-dry-run --force
+./aws-nuke nuke -c nuke.yaml --max-wait-retries 200 --no-dry-run --force -l debug
 
 rm nuke.yaml
 rm aws-nuke
