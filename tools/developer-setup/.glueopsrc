@@ -44,5 +44,5 @@ dev() {
         fi
     done
 
-    mkdir -p workspaces/glueops; sudo docker run -it --net=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --init --device=/dev/net/tun -u $(id -u):$(getent group docker | cut -d: -f3) -v `pwd`/workspaces/glueops:/workspaces/glueops -v /var/run/docker.sock:/var/run/docker.sock -v /var/run/tailscale/tailscaled.sock:/var/run/tailscale/tailscaled.sock -w /workspaces/glueops ghcr.io/glueops/codespaces:${CONTAINER_TAG_TO_USE} bash -c "code tunnel --random-name ${CODESPACE_ENABLE_VERBOSE:+--verbose --log trace}"
+    mkdir -p workspaces/glueops; sudo docker run -it --net=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --init --device=/dev/net/tun -u $(id -u):$(getent group docker | cut -d: -f3) -v `pwd`/workspaces/glueops:/workspaces/glueops -v /var/run/docker.sock:/var/run/docker.sock -v /var/run/tailscale/tailscaled.sock:/var/run/tailscale/tailscaled.sock -w /workspaces/glueops ghcr.io/glueops/codespaces:${CONTAINER_TAG_TO_USE} bash -c "code tunnel --random-name ${CODESPACE_ENABLE_VERBOSE_LOGS:+--verbose --log trace}"
 }
