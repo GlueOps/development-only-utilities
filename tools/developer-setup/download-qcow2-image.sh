@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -z "$VM_NAME" ] || [ -z "$TAG" ]; then
   echo ""
   [ -z "$VM_NAME" ] && echo "VM_NAME environment variable is required" && echo "e.g. export VM_NAME=dinosaur-cat" && echo ""
