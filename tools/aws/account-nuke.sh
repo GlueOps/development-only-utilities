@@ -7,10 +7,22 @@ echo -e "\n"
 AWS_NUKE_VERSION=v3.29.5
 
 [ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] && echo -e "\e[32mCHECKS PASSED. PLEASE PROCEED\e[0m" || echo -e "\e[31mYOU MUST RUN THIS FROM THE ROOT ORG ACCOUNT. STOP IMMEDIATELY.\e[0m"
-echo -e "\n"
-echo -e "\e[31mPlease enter your AWS account name. This account will have ALL of it's resources destroyed! It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):\e[0m"
-echo ""
-read ACCOUNT_NAME
+
+
+# Check if the environment variable is set
+if [ -z "$AWS_ACCOUNT_NAME_TO_NUKE" ]; then
+  # If not set, prompt for the account name
+  echo -e "\n"
+  echo -e "\e[31mPlease enter your AWS account name. This account will have ALL of its resources destroyed! It should start with glueops-captain (e.g. glueops-captain-laciudaddelgato):\e[0m"
+  echo ""
+  read -p "Account Name: " AWS_ACCOUNT_NAME_TO_NUKE
+  echo -e "\n"
+fi
+
+# Now AWS_ACCOUNT_NAME_TO_NUKE will contain the value (either from the environment or user input)
+echo "The AWS account name to nuke is: $AWS_ACCOUNT_NAME_TO_NUKE"
+
+ACCOUNT_NAME=$AWS_ACCOUNT_NAME_TO_NUKE
 echo -e "\n"
 wget https://github.com/ekristen/aws-nuke/releases/download/$AWS_NUKE_VERSION/aws-nuke-$AWS_NUKE_VERSION-linux-amd64.tar.gz && tar -xvf aws-nuke-$AWS_NUKE_VERSION-linux-amd64.tar.gz && rm aws-nuke-$AWS_NUKE_VERSION-linux-amd64.tar.gz
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
