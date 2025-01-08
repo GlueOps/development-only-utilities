@@ -39,7 +39,6 @@ asset_urls="$(
 # Iterate over each URL (one per line).
 for asset_url in ${asset_urls}; do
   filename="${asset_url##*/}"
-  filename="${asset_url##*/}"
   image_name="${filename%%.qcow2.tar*}.qcow2"
   if [[ -f "${DOWNLOAD_DIR}/${image_name}" ]]; then
     echo "Image: ${image_name} exists in ${DOWNLOAD_DIR}. Skipping ${asset_url}"
