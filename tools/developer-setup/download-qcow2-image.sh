@@ -18,7 +18,6 @@ mkdir -p "${DOWNLOAD_DIR}"
 
 if [[ -f "${DOWNLOAD_DIR}/${TAG}.qcow2" ]]; then
   echo "Image: ${TAG}.qcow2 exists in ${DOWNLOAD_DIR}. Skipping ${asset_url}"
-  continue
 else
   LOCKFILE="/tmp/qcow2-image-download.lock"
   # Acquire an exclusive lock on file descriptor 200
