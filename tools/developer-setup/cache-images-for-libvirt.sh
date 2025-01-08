@@ -9,6 +9,11 @@ PER_PAGE=1
 DOWNLOAD_DIR="/opt/qcow2-image-cache"
 mkdir -p "${DOWNLOAD_DIR}"
 
+LOCKFILE="/tmp/qcow2-image-download.lock"
+# Acquire an exclusive lock on file descriptor 200
+exec 200>"${LOCKFILE}"
+flock -x 200
+
 echo "Checking for new releases..."
 
 # Fetch the latest releases in JSON form (no authentication needed).
@@ -78,3 +83,6 @@ rm -rf "${DOWNLOAD_DIR}"/*.qcow2.*
 find "${DOWNLOAD_DIR}" -name "*.qcow2" -type f -mmin +93600 -exec rm -f {} \;
 echo "Cleaned up images not modified in the last 65 days."
 echo "Finished caching recent qcow2 images"
+
+# Release the lock
+flock -u 200
