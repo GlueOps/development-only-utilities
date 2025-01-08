@@ -51,6 +51,7 @@ else
   
   
   cat /tmp/$VM_NAME/*.qcow2.tar.part_* > /tmp/$VM_NAME/$VM_NAME.qcow2.tar
+  tar -tvf /tmp/$VM_NAME/$VM_NAME.qcow2.tar
   tar -xvf /tmp/$VM_NAME/$VM_NAME.qcow2.tar -C /tmp/$VM_NAME
 
   mv /tmp/$VM_NAME/*.qcow2 /opt/qcow2-image-cache/$TAG.qcow2
