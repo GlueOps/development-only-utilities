@@ -41,6 +41,8 @@ else
     curl -L -o "/tmp/$VM_NAME/$filename" "$url" &
   done
   
+  # Wait for all background jobs to complete
+  wait
 
   # Calculate and display elapsed time
   end_time=$(date +%s)
