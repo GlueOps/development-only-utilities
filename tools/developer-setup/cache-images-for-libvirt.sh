@@ -69,6 +69,7 @@ for release_tag in ${release_tags}; do
   else
     echo "Image: ${release_tag}.qcow2 does not exist in ${DOWNLOAD_DIR} and will be extracted..."
     cat ${DOWNLOAD_DIR}/${release_tag}.qcow2.tar.part_* > ${DOWNLOAD_DIR}/${release_tag}.qcow2.tar
+    tar -tvf ${DOWNLOAD_DIR}/${release_tag}.qcow2.tar
     tar -xvf ${DOWNLOAD_DIR}/${release_tag}.qcow2.tar -C ${DOWNLOAD_DIR}
     echo "Extracted ${release_tag}.qcow2"
   fi
