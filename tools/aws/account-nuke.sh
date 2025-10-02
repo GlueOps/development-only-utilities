@@ -4,7 +4,7 @@
 ##
 set -e
 echo -e "\n"
-AWS_NUKE_VERSION=v3.52.1
+AWS_NUKE_VERSION=v3.60.0
 
 [ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] && echo -e "\e[32mCHECKS PASSED. PLEASE PROCEED\e[0m" || echo -e "\e[31mYOU MUST RUN THIS FROM THE ROOT ORG ACCOUNT. STOP IMMEDIATELY.\e[0m"
 
