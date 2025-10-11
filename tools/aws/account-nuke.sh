@@ -35,6 +35,7 @@ accounts:
   AWS_ACCOUNT_ID_TO_DESTROY: # This `12345678910` account ID will have most, if not all of it's resources DESTROYED. This will allow you to redeploy the glueops stack cleanly using the same sub account.
     presets:
       - common #these presets basically say exclude certain things, these are things we want to keep so we can easily provision again into this account later
+      - sso
   
 presets:
   common:
