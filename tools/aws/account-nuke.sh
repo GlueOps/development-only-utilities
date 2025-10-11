@@ -48,6 +48,18 @@ presets:
       OpsWorksUserProfile:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
+  sso:
+    filters:
+      IAMSAMLProvider:
+      - type: "regex"
+        value: "AWSSSO_.*_DO_NOT_DELETE"
+      IAMRole:
+      - type: "glob"
+        value: "AWSReservedSSO_*"
+      IAMRolePolicyAttachment:
+      - type: "glob"
+        value: "AWSReservedSSO_*"
+
 
 regions: #this regions list was last updated on October 10, 2023.
 - global
