@@ -61,10 +61,8 @@ presets:
         value: "AWSReservedSSO_*"
 
 
-regions: #this regions list was last updated on October 10, 2023.
-- global
-- us-west-2
-- us-east-1
+regions: #this regions list was last updated on October 11, 2025. https://aws-nuke.ekristen.dev/features/enabled-regions/
+- all
 
 
 EOF
