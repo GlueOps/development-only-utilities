@@ -38,7 +38,7 @@ IFS='.' read -ra ADDR <<< "$CAPTAIN_DOMAIN"
 ENVIRONMENT_NAME=${ADDR[0]}
 TENANT_NAME=${ADDR[1]}
 
-ACCOUNT_NAME="tenant-$TENANT_NAME"
+ACCOUNT_NAME="$TENANT_NAME.onglueops.rocks"
 SUB_ACCOUNT_ID=$(aws organizations list-accounts --output json | jq -r --arg ACCOUNT_NAME "$ACCOUNT_NAME" '.Accounts[] | select(.Name==$ACCOUNT_NAME) | .Id')
 
 
