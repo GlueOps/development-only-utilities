@@ -67,6 +67,37 @@ regions: #this regions list was last updated on October 11, 2025. https://aws-nu
 - us-west-2
 - us-east-1
 
+resource-types:
+  excludes:
+    # Retired/unreachable services — cause DNS failures or TCP timeouts (~2 min each)
+    - OpsWorksApp
+    - OpsWorksInstance
+    - OpsWorksLayer
+    - OpsWorksUserProfile
+    - OpsWorksCMBackup
+    - OpsWorksCMServer
+    - OpsWorksCMServerState
+    - ElasticTranscoderPipeline
+    - ElasticTranscoderPreset
+    - CodeStarProject
+    # Services not enabled on this account — always error
+    - ShieldProtection
+    - ShieldProtectionGroup
+    - CloudSearchDomain
+    - FMSPolicy
+    - FMSNotificationChannel
+    - RoboMakerRobotApplication
+    - RoboMakerSimulationApplication
+    - RoboMakerSimulationJob
+    - LexBot
+    - LexIntent
+    - LexSlotType
+    - LexModelBuildingServiceBotAlias
+    - "AWS::Timestream::ScheduledQuery"
+    - "AWS::Timestream::Database"
+    - "AWS::Timestream::Table"
+
+
 
 EOF
 
