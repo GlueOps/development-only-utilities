@@ -2,6 +2,7 @@
    deploy-argocd() {
     crd_version=""
     helm_version=""
+    kube_prometheus_stack_version=""
 
     # Parse flags
     while [[ $# -gt 0 ]]; do
@@ -17,12 +18,18 @@
           shift
           shift
           ;;
+        (-p|--kube-prometheus-stack-version)
+          kube_prometheus_stack_version="$2"
+          shift
+          shift
+          ;;
         (--help)
           echo "Usage: deploy-argocd [options]"
           echo ""
           echo "Options:"
           echo "  -c, --crd-version VALUE   Set the version for ArgoCD CRDs to deploy"
           echo "  -h, --helm-version VALUE  Set the version of the ArgoCD Helm Chart to deploy"
+          echo "  -p, --kube-prometheus-stack-version VALUE  Set the version of the kube-prometheus-stack chart whose CRDs will be deployed"
           echo "  --help                    Show this help message and exit"
           return
           ;;
@@ -35,13 +42,20 @@
     done
 
     # Check if version arguments were provided
-    if [[ -z $crd_version || -z $helm_version ]]; then
-        echo "Both arguments are required."
+    if [[ -z $crd_version || -z $helm_version || -z $kube_prometheus_stack_version ]]; then
+        echo "All arguments are required."
         echo "Run 'deploy-argocd --help' for usage information."
         return
     fi
     
+    # The kube-prometheus-stack CRDs are applied server-side because they are too
+    # large for client-side apply. Sparse clone keeps the checkout to just the CRD folder.
+    crds_dir=$(mktemp -d)
     kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=$crd_version" && \
+    git -c advice.detachedHead=false clone --quiet --depth 1 --branch "kube-prometheus-stack-${kube_prometheus_stack_version}" --filter=blob:none --sparse https://github.com/prometheus-community/helm-charts.git "$crds_dir" && \
+    git -C "$crds_dir" sparse-checkout set --no-cone charts/kube-prometheus-stack/charts/crds/crds && \
+    kubectl apply --server-side --force-conflicts -R -f "$crds_dir/charts/kube-prometheus-stack/charts/crds/crds" && \
+    rm -rf "$crds_dir" && \
     helm repo update && \
     helm install argocd argo/argo-cd --skip-crds --version $helm_version -f argocd.yaml --namespace=glueops-core --create-namespace && \
     echo "--------------------------------------------------------------"
