@@ -1,59 +1,7 @@
-
-   deploy-argocd() {
-    crd_version=""
-    helm_version=""
-
-    # Parse flags
-    while [[ $# -gt 0 ]]; do
-      key="$1"
-      case $key in
-        (-c|--crd-version)
-          crd_version="$2"
-          shift
-          shift
-          ;;
-        (-h|--helm-version)
-          helm_version="$2"
-          shift
-          shift
-          ;;
-        (--help)
-          echo "Usage: deploy-argocd [options]"
-          echo ""
-          echo "Options:"
-          echo "  -c, --crd-version VALUE   Set the version for ArgoCD CRDs to deploy"
-          echo "  -h, --helm-version VALUE  Set the version of the ArgoCD Helm Chart to deploy"
-          echo "  --help                    Show this help message and exit"
-          return
-          ;;
-        (*)
-          echo "Unknown option: $key"
-          echo "Run 'deploy-argocd --help' for usage information."
-          return
-          ;;
-      esac
-    done
-
-    # Check if version arguments were provided
-    if [[ -z $crd_version || -z $helm_version ]]; then
-        echo "Both arguments are required."
-        echo "Run 'deploy-argocd --help' for usage information."
-        return
-    fi
-    
-    kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=$crd_version" && \
-    helm repo update && \
-    helm install argocd argo/argo-cd --skip-crds --version $helm_version -f argocd.yaml --namespace=glueops-core --create-namespace && \
-    echo "--------------------------------------------------------------"
-    echo -e "🕑  \033[1;32mMonitoring ArgoCD installation will start in 2 seconds...\033[0m"
-    echo -e "👁️  We'll use the command: \033[1;34mwatch kubectl get pods -n glueops-core\033[0m"
-    echo "--------------------------------------------------------------"
-    echo -e "🛑  You may stop the monitoring process at any time using \033[1;31mCTRL+C\033[0m."
-    echo -e "⏳  Please wait until all services are up and running. Patience is key!"
-    echo "--------------------------------------------------------------"
-    echo -e "🐢  The \033[1;33margocd-redis-ha-server-*\033[0m pods might take the longest to deploy."
-    echo -e "🔢  Make sure to wait until \033[1;36m3 pods\033[0m with \033[1;36m3 replicas\033[0m each are fully deployed."
-    echo "--------------------------------------------------------------"
-    sleep 10
-    watch kubectl get pods -n glueops-core
+# DEPRECATED. This file is kept only so that existing captain repositories that
+# `source <(curl ...)` it at a pinned tools_version keep working. It must stay
+# sourceable: never call `exit` here, only `return`.
+deploy-argocd() {
+  echo "deploy-argocd is deprecated: CRDs, ArgoCD and the platform are installed with captain_utils from your captain repo (menu: crds -> argocd -> crds -> glueops-platform); see the README of your captain repository" >&2
+  return 1
 }
