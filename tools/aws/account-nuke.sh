@@ -43,9 +43,22 @@ presets:
       IAMRole:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
+      # RegionGuard: the leftover-resource monitor (see region-guard/).
+      # Filtered by NAME rather than excluded by type, because excluding the
+      # IAMRole type outright would preserve every role in the account.
+      - type: contains
+        value: 'RegionGuard'
       IAMRolePolicyAttachment:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
+      - type: contains
+        value: 'RegionGuard'
+      IAMRolePolicy:
+      - type: contains
+        value: 'RegionGuard'
+      CloudWatchLogsLogGroup:
+      - type: glob
+        value: '/aws/lambda/RegionGuard-*'
       OpsWorksUserProfile:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
@@ -96,6 +109,20 @@ resource-types:
     - "AWS::Timestream::ScheduledQuery"
     - "AWS::Timestream::Database"
     - "AWS::Timestream::Table"
+    # --- RegionGuard: leftover-resource monitor (see region-guard/) ---
+    # Kept so the monitor survives the nuke. The ARN service namespace of every
+    # type listed here MUST also appear in `ignored_services` in
+    # region-guard/variables.tf -- otherwise the monitor counts its own
+    # resources and the alarm can never return to OK.
+    - LambdaFunction              # arn:aws:lambda:...
+    - LambdaEventSourceMapping
+    - LambdaLayer
+    - SchedulerSchedule           # arn:aws:scheduler:...  (EventBridge Scheduler)
+    - CloudWatchAlarm             # arn:aws:cloudwatch:...
+    - SNSTopic                    # arn:aws:sns:...
+    - SNSSubscription
+    # NOTE: aws-nuke v3.60.0 has no SchedulerScheduleGroup resource type, so the
+    # schedule group needs no exclude. region-guard uses the `default` group.
 
 
 
