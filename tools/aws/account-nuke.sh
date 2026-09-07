@@ -6,6 +6,13 @@ set -e
 echo -e "\n"
 AWS_NUKE_VERSION=v3.60.0
 
+# Only these accounts keep the monitor's own resources through a nuke. Any
+# account NOT listed here gets a full nuke, monitor included
+#
+# Override for a one-off run:
+#   AWSNUKEGUARD_ACCOUNTS="111111111111 222222222222" bash nuke.yaml
+AWSNUKEGUARD_ACCOUNTS="${AWSNUKEGUARD_ACCOUNTS:-354877932865 785387425692}"
+
 [ "$(aws sts get-caller-identity --query Account --output text)" = "$(aws organizations describe-organization --query Organization.MasterAccountId --output text)" ] && echo -e "\e[32mCHECKS PASSED. PLEASE PROCEED\e[0m" || echo -e "\e[31mYOU MUST RUN THIS FROM THE ROOT ORG ACCOUNT. STOP IMMEDIATELY.\e[0m"
 
 
@@ -36,6 +43,9 @@ accounts:
     presets:
       - common #these presets basically say exclude certain things, these are things we want to keep so we can easily provision again into this account later
       - sso
+      # >>> AWSNUKEGUARD
+      - awsnukeguard
+      # <<< AWSNUKEGUARD
   
 presets:
   common:
@@ -43,22 +53,9 @@ presets:
       IAMRole:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
-      # RegionGuard: the leftover-resource monitor (see region-guard/).
-      # Filtered by NAME rather than excluded by type, because excluding the
-      # IAMRole type outright would preserve every role in the account.
-      - type: contains
-        value: 'RegionGuard'
       IAMRolePolicyAttachment:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
-      - type: contains
-        value: 'RegionGuard'
-      IAMRolePolicy:
-      - type: contains
-        value: 'RegionGuard'
-      CloudWatchLogsLogGroup:
-      - type: glob
-        value: '/aws/lambda/RegionGuard-*'
       OpsWorksUserProfile:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
@@ -73,6 +70,25 @@ presets:
       IAMRolePolicyAttachment:
       - type: "glob"
         value: "AWSReservedSSO_*"
+  # >>> AWSNUKEGUARD
+  # Everything between the AWSNUKEGUARD markers -- here, in the account's preset
+  # list, and in resource-types.excludes -- is stripped by the generating script
+  # when the target account is not listed in AWSNUKEGUARD_ACCOUNTS.
+  awsnukeguard:
+    filters:
+      IAMRole:
+      - type: contains
+        value: 'AWSNukeGuard'
+      IAMRolePolicyAttachment:
+      - type: contains
+        value: 'AWSNukeGuard'
+      IAMRolePolicy:
+      - type: contains
+        value: 'AWSNukeGuard'
+      CloudWatchLogsLogGroup:
+      - type: glob
+        value: '/aws/lambda/AWSNukeGuard-*'
+  # <<< AWSNUKEGUARD
 
 
 regions: #this regions list was last updated on October 11, 2025. https://aws-nuke.ekristen.dev/features/enabled-regions/
@@ -109,7 +125,7 @@ resource-types:
     - "AWS::Timestream::ScheduledQuery"
     - "AWS::Timestream::Database"
     - "AWS::Timestream::Table"
-    # --- RegionGuard: leftover-resource monitor (see region-guard/) ---
+    # >>> AWSNUKEGUARD
     # Kept so the monitor survives the nuke. The ARN service namespace of every
     # type listed here MUST also appear in `ignored_services` in
     # region-guard/variables.tf -- otherwise the monitor counts its own
@@ -123,6 +139,7 @@ resource-types:
     - SNSSubscription
     # NOTE: aws-nuke v3.60.0 has no SchedulerScheduleGroup resource type, so the
     # schedule group needs no exclude. region-guard uses the `default` group.
+    # <<< AWSNUKEGUARD
 
 
 
@@ -130,6 +147,17 @@ EOF
 
 
 sed -i "s/AWS_ACCOUNT_ID_TO_DESTROY/${SUB_ACCOUNT_ID}/g" nuke.yaml
+
+
+### Scope the AWSNukeGuard exclusions to accounts that actually have it.
+### The generated config always contains them; they are removed here otherwise,
+### so an unguarded account is nuked completely.
+if echo " $AWSNUKEGUARD_ACCOUNTS " | grep -q " $SUB_ACCOUNT_ID "; then
+  echo -e "\e[32mAWSNukeGuard is deployed in $SUB_ACCOUNT_ID: its resources will be preserved.\e[0m"
+else
+  echo -e "\e[33mAWSNukeGuard is not listed for $SUB_ACCOUNT_ID: nuking everything, monitor included.\e[0m"
+  sed -i '/# >>> AWSNUKEGUARD/,/# <<< AWSNUKEGUARD/d' nuke.yaml
+fi
 
 
 ### Assume role in the sub-account
