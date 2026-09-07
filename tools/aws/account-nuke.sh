@@ -137,8 +137,6 @@ resource-types:
     - CloudWatchAlarm             # arn:aws:cloudwatch:...
     - SNSTopic                    # arn:aws:sns:...
     - SNSSubscription
-    # NOTE: aws-nuke v3.60.0 has no SchedulerScheduleGroup resource type, so the
-    # schedule group needs no exclude. region-guard uses the `default` group.
     # <<< AWSNUKEGUARD
 
 
