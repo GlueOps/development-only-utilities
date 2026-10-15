@@ -59,6 +59,13 @@ presets:
       OpsWorksUserProfile:
       - type: regex
         value: '.*OrganizationAccountAccessRole.*'
+      # AWS-managed defaults (e.g. default.iam-user); the ElastiCache API rejects dotted IDs so they can never be deleted
+      ElasticacheUser:
+      - type: regex
+        value: '^default\..*'
+      ElasticacheUserGroup:
+      - type: regex
+        value: '^default\..*'
   sso:
     filters:
       IAMSAMLProvider:
